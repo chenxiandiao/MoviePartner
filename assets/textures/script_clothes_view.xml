@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:42fd36d205bae3dd547406853f2d56ed$ -->
+<TextureAtlas imagePath="script_clothes_view.png">
+    <SubTexture nextScreen="movie_world" x1="0" y1="60" x2="60" y2="117" />
+    <SubTexture nextScreen="movie_create_concept_create" x1="0" y1="117" x2="60" y2="174" />
+    <SubTexture nextScreen="movie_task_view" x1="0" y1="172" x2="60" y2="220" />
+    <SubTexture nextScreen="movie_msg_view" x1="0" y1="223" x2="60" y2="273" />
+    <SubTexture nextScreen="movie_team_view" x1="0" y1="276" x2="60" y2="327" />
+    <SubTexture nextScreen="movie_ar_view" x1="0" y1="328" x2="60" y2="379" />
+    <SubTexture nextScreen="person_info" x1="0" y1="0" x2="58" y2="58" />
+    <SubTexture nextScreen="script_role_view" x1="59" y1="60" x2="398" y2="151"></SubTexture>
+    <SubTexture nextScreen="script_property_view" x1="59" y1="151" x2="398" y2="251"></SubTexture>
+    <SubTexture nextScreen="script_info" x1="59" y1="251" x2="398" y2="343"></SubTexture>
+    <SubTexture nextScreen="script_scene_script_view" x1="59" y1="573" x2="398" y2="648"></SubTexture>
+    <SubTexture nextScreen="script_info" x1="410" y1="67" x2="436" y2="96"></SubTexture>
+</TextureAtlas>

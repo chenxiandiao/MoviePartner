@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:42fd36d205bae3dd547406853f2d56ed$ -->
+<TextureAtlas imagePath="global_member_info.png">
+    <SubTexture nextScreen="movie_world" x1="0" y1="60" x2="60" y2="117" />
+    <SubTexture nextScreen="movie_create_concept_create" x1="0" y1="117" x2="60" y2="174" />
+    <SubTexture nextScreen="movie_task_view" x1="0" y1="172" x2="60" y2="220" />
+    <SubTexture nextScreen="movie_msg_view" x1="0" y1="223" x2="60" y2="273" />
+    <SubTexture nextScreen="movie_team_view" x1="0" y1="276" x2="60" y2="327" />
+    <SubTexture nextScreen="movie_ar_view" x1="0" y1="328" x2="60" y2="379" />
+    <SubTexture nextScreen="person_info" x1="0" y1="0" x2="58" y2="58" />
+	<SubTexture nextScreen="team_member_choose2" x1="626" y1="67" x2="659" y2="94"/>
+	<SubTexture nextScreen="movie_team_view" x1="754" y1="538" x2="958" y2="573"/>
+</TextureAtlas>
