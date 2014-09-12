@@ -19,7 +19,6 @@ package mainscreens
 			this._bg.source = EmbeddedAssets.MOVIE_WORLD_CONTENT_ICON;
 			
 			this.addChild(this._bg);
-			trace("hello");
 		}
 	}
 }
