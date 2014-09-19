@@ -1,6 +1,8 @@
 package mainscreens
 {
 	import feathers.controls.Screen;
+	
+	import utils.ConstantsUtil;
 
 	public class MovieCreateScreen extends Screen
 	{
@@ -12,6 +14,7 @@ package mainscreens
 		override protected function initialize():void
 		{
 			trace("MovieCreateScreen initialize");
+			PageIndex.movieCreateIndex = "ConceptTalkScreen";
 			if (PageIndex.movieCreateIndex == ""||PageIndex.movieCreateIndex == "ConceptCreateScreen")
 			{
 				this.addChild(new ConceptCreateScreen());

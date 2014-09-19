@@ -21,8 +21,6 @@ package mainscreens
 			
 			this._bg = new ImageLoader();
 			this._bg.source = EmbeddedAssets.REGISTOR_ROLE_CHOOSE_ICON;
-			this._bg.width = EmbeddedAssets.REGISTOR_ROLE_CHOOSE_ICON.width*this.dpiScale;
-			this._bg.height = EmbeddedAssets.REGISTOR_ROLE_CHOOSE_ICON.height*this.dpiScale;
 			this.addChild(this._bg);
 			this._bg.addEventListener(TouchEvent.TOUCH,onClickTriggered);
 		}

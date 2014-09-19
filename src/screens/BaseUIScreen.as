@@ -44,8 +44,6 @@ package screens
 			
 			var startupImg:Image = Image.fromBitmap(new StartupImg());
 			
-			startupImg.x = 0;
-			startupImg.y = 0;
 			startupImg.width  = Constants.STAGE_WIDTH/2;
 			startupImg.height = Constants.STAGE_HEIGHT;
 			addChild(startupImg);

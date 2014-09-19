@@ -1,15 +1,22 @@
 package mainscreens
 {
 	import feathers.controls.Button;
+	import feathers.controls.Callout;
 	import feathers.controls.ImageLoader;
+	import feathers.controls.List;
 	import feathers.controls.Screen;
 	import feathers.controls.TextInput;
+	import feathers.controls.renderers.DefaultListItemRenderer;
+	import feathers.controls.renderers.IListItemRenderer;
+	import feathers.data.ListCollection;
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	
 	import starling.animation.DelayedCall;
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
+	import starling.display.DisplayObject;
+	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -24,6 +31,8 @@ package mainscreens
 		private var _roleImg:ImageLoader;
 		private var _roleTextInput:TextInput;
 		private var roleChooseScreen:RoleChooseScreen;
+		private var _quad:Quad;
+		private var _yearList:List;
 		public function RegistorStepTwoScreen(_prevScreen:Screen)
 		{
 			this._prevScreen = _prevScreen;
@@ -31,6 +40,9 @@ package mainscreens
 		
 		override protected function initialize():void
 		{
+			this._quad = new Quad(1024-80,768, 0x000000);
+			this._quad.alpha = 0.1;
+			
 			this._backBtn = new Button();
 			this._backBtn.label = "back";
 			this._backBtn.addEventListener(TouchEvent.TOUCH,onClickTriggered);
@@ -50,12 +62,15 @@ package mainscreens
 			this.addChild(this._roleTextInput);
 			
 			this.addEventListener("item choose",itemChooseTriggered);
+			
+			initYearList();
 		}
 		
 		private function itemChooseTriggered(event:Event):void
 		{
 			trace("get the data from children screen:"+event.data.id);
-			trace("RegistorStepTwoScreen item choose triggered");	
+			trace("RegistorStepTwoScreen item choose triggered");
+			this.removeChild(this._quad);
 			this.removeChild(this.roleChooseScreen);
 		}
 		private function onClickTriggered(event:TouchEvent):void
@@ -83,22 +98,73 @@ package mainscreens
 //					Starling.juggler.add(tween);				
 					
 					//数据传递方式,事件传递
-					PopupWindowStyleOne();
+//					PopupWindowStyleOne();
 //					PopupWindowStyleTwo();
 //					PopUpWindowStyleThree();
+					popCalendar();
 				}
 				
 			
 			}
 		}
 		
+		private function popCalendar():void
+		{
+			
+			this.showCallout(this._roleImg, Callout.DIRECTION_DOWN);
+		}
+		
+		private function showCallout(origin:DisplayObject, direction:String):void
+		{
+			
+			const callout:Callout = Callout.show(DisplayObject(this._yearList), origin, direction);
+			callout.backgroundSkin = new Quad(100,100,0xffffff);
+			//we're reusing the message every time that this screen shows a
+			//callout, so we don't want the message to be disposed. we'll
+			//dispose of it manually later when the screen is disposed.
+			callout.disposeContent = false;
+		}
+		
+		private function initYearList():void
+		{
+			var items:Array = [];
+			for(var i:int = 0; i < 10; i++)
+			{
+				var item:Object = {text: "Item " + (i + 1).toString()};
+				items[i] = item;
+			}
+			items.fixed = true;
+			
+			this._yearList = new List();
+			this._yearList.height = 200;
+			this._yearList.dataProvider = new ListCollection(items);
+			this._yearList.typicalItem = {text: "Item 1000"};
+			this._yearList.autoHideBackground = true;
+//			this._yearList.nameList.add();
+			this._yearList.itemRendererFactory = function():IListItemRenderer
+			{
+				
+				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
+				
+				//enable the quick hit area to optimize hit tests when an item
+				//is only selectable and doesn't have interactive children.
+				renderer.isQuickHitAreaEnabled = true;
+				renderer.labelField = "text";
+				return renderer;
+			};
+		}
+		
 		private function PopupWindowStyleOne():void
 		{
 			roleChooseScreen = new RoleChooseScreen();
 			roleChooseScreen.x = this.stage.width;
+			roleChooseScreen.validate();
+			trace(roleChooseScreen.width);
+//			this.alpha = 0.1;
+			this.addChild(this._quad);
 			this.addChild(roleChooseScreen);
 			var tween:Tween = new Tween(roleChooseScreen,0.5);
-			tween.animate("x",0);
+			tween.animate("x",1024-340-80);
 			Starling.juggler.add(tween);
 		}
 		
@@ -155,7 +221,7 @@ package mainscreens
 		
 		private function PopUpWindowStyleThree():void
 		{
-			var reusedCall:DelayedCall = new DelayedCall(spawnNewEnemy, 3);
+			var reusedCall:DelayedCall = new DelayedCall(spawnNewEnemy, 0.5);
 			// repeatCount set to 0 repeats indefinitely
 			reusedCall.repeatCount = 0;
 			Starling.juggler.add(reusedCall);

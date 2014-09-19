@@ -12,6 +12,7 @@ package mainscreens
 	import feathers.layout.VerticalLayout;
 	import feathers.themes.MetalWorksMobileTheme;
 	
+	import starling.display.Image;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -34,13 +35,11 @@ package mainscreens
 		private var _movieTeamBtn:Button;
 		private var _movieArBtn:Button;
 		private var _movieOtherBtn:Button;
-		private var _navigator:ScreenNavigator;
+		public var _navigator:ScreenNavigator;
 		
 		
 		public function Home()
 		{
-//			new MetalWorksMobileTheme();
-//			new ExtendedMetalWorksTheme();
 		}
 		
 		override protected function initialize():void
@@ -61,15 +60,14 @@ package mainscreens
 			this._leftMenu = new LayoutGroup();
 			this._leftMenu.layout = new VerticalLayout();
 			
-			this._userPhontoBtn = initLeftBtn(this._userPhontoBtn,EmbeddedAssets.USER_PHOTO_ICON);
-			this._movieWorldBtn = initLeftBtn(this._movieWorldBtn,EmbeddedAssets.MOVIE_WORLD_ICON);
-			this._movieCreateBtn = initLeftBtn(this._movieCreateBtn,EmbeddedAssets.MOVIE_CREATE_ICON);
-//			this._movieCreateBtn.label = "hello";
-			this._movieTaskBtn = initLeftBtn(this._movieTaskBtn,EmbeddedAssets.MOVIE_TASK_ICON);
-			this._movieMsgBtn = initLeftBtn(this._movieMsgBtn,EmbeddedAssets.MOVIE_MSG_ICON);
-			this._movieTeamBtn = initLeftBtn(this._movieTeamBtn,EmbeddedAssets.MOVIE_TEAM_ICON);
-			this._movieArBtn = initLeftBtn(this._movieArBtn,EmbeddedAssets.MOVIE_AR_ICON);
-			this._movieOtherBtn = initLeftBtn(this._movieOtherBtn,EmbeddedAssets.MOVIE_OTHER_ICON);
+			this._userPhontoBtn = initLeftBtn(this._userPhontoBtn,EmbeddedAssets.USER_PHOTO_ICON,null);
+			this._movieWorldBtn = initLeftBtn(this._movieWorldBtn,EmbeddedAssets.MOVIE_WORLD_ICON,EmbeddedAssets.MOVIE_WORLD_IN_ICON);
+			this._movieCreateBtn = initLeftBtn(this._movieCreateBtn,EmbeddedAssets.MOVIE_CREATE_ICON,EmbeddedAssets.MOVIE_CREATE_IN_ICON);
+			this._movieTaskBtn = initLeftBtn(this._movieTaskBtn,EmbeddedAssets.MOVIE_TASK_ICON,null);
+			this._movieMsgBtn = initLeftBtn(this._movieMsgBtn,EmbeddedAssets.MOVIE_MSG_ICON,null);
+			this._movieTeamBtn = initLeftBtn(this._movieTeamBtn,EmbeddedAssets.MOVIE_TEAM_ICON,null);
+			this._movieArBtn = initLeftBtn(this._movieArBtn,EmbeddedAssets.MOVIE_AR_ICON,null);
+			this._movieOtherBtn = initLeftBtn(this._movieOtherBtn,EmbeddedAssets.MOVIE_OTHER_ICON,null);
 			
 			this._leftMenu.addChild(this._userPhontoBtn);
 			this._leftMenu.addChild(this._movieWorldBtn);
@@ -89,23 +87,27 @@ package mainscreens
 		}
 		
 	
-		private function initLeftBtn(btn:Button,texture:Texture):Button
+		private function initLeftBtn(btn:Button,texture:Texture,disableTexture:Texture):Button
 		{
 			btn = new Button();
-			var icon:ImageLoader = new ImageLoader();
+//			var icon:ImageLoader = new ImageLoader();
 	
-			icon.source = texture;
-			icon.snapToPixels = true;
+//			icon.source = texture;
+//			icon.snapToPixels = true;
 			btn.width = texture.width;
 			btn.height = texture.height
-			btn.defaultIcon = icon;
+			btn.defaultIcon = new Image(texture);
+			if (disableTexture!=null)
+			{
+				btn.disabledIcon = new Image(disableTexture);
+			}
 			return btn;
 		}
 		
 		private function initLeftContent():void
 		{
 			this._navigator = new ScreenNavigator();
-			
+			this._navigator.addScreen(ConstantsUtil.USERREGISTOR,new ScreenNavigatorItem(RegistorScreen));	
 			this._navigator.addScreen(ConstantsUtil.USERLOGIN,new ScreenNavigatorItem(LoginScreen));
 			this._navigator.addScreen(ConstantsUtil.HOMECONTENT,new ScreenNavigatorItem(HomeContentScreen));
 			this._navigator.addScreen(ConstantsUtil.MOVIECREATE,new ScreenNavigatorItem(MovieCreateScreen));
@@ -117,6 +119,7 @@ package mainscreens
 		
 		private function setBtnClickListener():void
 		{
+			this._movieWorldBtn.isEnabled = false;
 			this._userPhontoBtn.addEventListener(TouchEvent.TOUCH,onClickTriggered);			
 			this._movieCreateBtn.addEventListener(TouchEvent.TOUCH,onClickTriggered);
 			this._movieWorldBtn.addEventListener(TouchEvent.TOUCH,onClickTriggered);
@@ -133,20 +136,54 @@ package mainscreens
 			if( touch.phase == TouchPhase.BEGAN )
 			{
 				if(event.currentTarget == this._movieCreateBtn)
-				{				
-					this._navigator.showScreen(ConstantsUtil.MOVIECREATE);
+				{			
+					changeLeftBtnState(this._movieCreateBtn);
+					ConstantsUtil.GLOBALPAGE = ConstantsUtil.MOVIECREATE;
+					if (ConstantsUtil.USERNAME!="")
+					{
+						this._navigator.showScreen(ConstantsUtil.MOVIECREATE);
+					}
+					else
+					{
+						this._navigator.showScreen(ConstantsUtil.USERLOGIN);
+					}
+					
 				}
 				else if(event.currentTarget == this._movieWorldBtn)
 				{
+					ConstantsUtil.GLOBALPAGE = ConstantsUtil.HOMECONTENT;
+					changeLeftBtnState(this._movieWorldBtn);
 					this._navigator.showScreen(ConstantsUtil.HOMECONTENT);
 				}
 				else if(event.currentTarget == this._userPhontoBtn)
 				{
-					this._navigator.showScreen(ConstantsUtil.USERLOGIN);
+					changeLeftBtnState(this._userPhontoBtn);
+					if (ConstantsUtil.USERNAME!="")
+					{
+					}
+					else
+					{
+						this._navigator.showScreen(ConstantsUtil.USERREGISTOR);
+//						this._navigator.showScreen(ConstantsUtil.USERLOGIN);
+					}
+					
 				}
 			}
 		}
 		
+		private function changeLeftBtnState(btn:Button):void{
+			for(var i:int =0;i<_leftMenu.numChildren;i++)
+			{
+				(Button)(this._leftMenu.getChildAt(i)).isEnabled = true;
+			}
+			for(var k:int =0;k<_leftMenu.numChildren;k++)
+			{
+				if (this._leftMenu.getChildAt(k) == btn)
+				{
+					(Button)(this._leftMenu.getChildAt(k)).isEnabled = false;
+				}
+			}
+		}
 //		private function loader_completeHandler(event:Event):void
 //		{
 //			this._icon.validate();

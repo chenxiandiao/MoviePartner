@@ -74,10 +74,10 @@ package screens
 			if( touch.phase == TouchPhase.ENDED )
 			{
 				trace("edit image click");
-				PopUpManager.addPopUp( new BaseUIScreen(), false, false , function():DisplayObject
+				PopUpManager.addPopUp( new BaseUIScreen(), true, true , function():DisplayObject
 				{
-					var quad:Quad = new Quad(100, 100, 0xff0000);
-					quad.alpha = 0.75;
+					var quad:Quad = new Quad(10,10, 0xffffff);
+					quad.alpha = 0.1;
 					return quad;
 				});
 				

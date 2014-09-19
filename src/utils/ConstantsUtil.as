@@ -7,7 +7,9 @@ package utils
 		public static var USERREGISTOR:String = "userRegistor";
 		public static var USERLOGIN:String = "userLogin";
 		public static var LOGINFLAG:Boolean = false;
-		public static var SERVERURL:String = "http://127.0.0.1:8080/iMovieServer/as";
+		public static var SERVERURL:String = "http://10.10.15.250:8080/iMovierServerB/";
+		public static var USERNAME:String = "";
+		public static var GLOBALPAGE:String = HOMECONTENT;
 		public function ConstantsUtil()
 		{
 		}

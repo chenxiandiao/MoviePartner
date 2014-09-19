@@ -5,6 +5,7 @@ package mainscreens
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.Screen;
+	import feathers.controls.ScreenNavigator;
 	import feathers.controls.TextInput;
 	import feathers.controls.text.TextFieldTextRenderer;
 	import feathers.core.ITextRenderer;
@@ -16,6 +17,7 @@ package mainscreens
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.text.TextFormat;
 	
 	import starling.events.Touch;
@@ -159,18 +161,18 @@ package mainscreens
 			}
 			if( touch.phase == TouchPhase.BEGAN )
 			{
-				
+				loginRequest();
 			}
 		}
 		
 		
 		private function loginRequest():void 
 		{
-			this._urlRequest.url = ConstantsUtil.SERVERURL;
+			this._urlRequest.url = ConstantsUtil.SERVERURL+"UserLogin";
 			this._urlRequest.method = URLRequestMethod.POST;
-			var params:Object = new Object();
-			params.username = this._inputUsername.text;
-			params.password = this._inputPassword.text;
+			var params:URLVariables = new URLVariables();
+			params.UserName = this._inputUsername.text;
+			params.Password = this._inputPassword.text;
 			this._urlRequest.data = params;
 			this._urlLoader.load(this._urlRequest);
 			this._urlLoader.addEventListener(flash.events.Event.COMPLETE,completeHandler);
@@ -178,7 +180,15 @@ package mainscreens
 		
 		private function completeHandler(event:flash.events.Event):void
 		{
-			trace( event.currentTarget.data ) ;
+			var data:String = event.currentTarget.data as String;
+			var result:Object = JSON.parse(data);
+			if (result.type=="check_ok")
+			{
+				ConstantsUtil.USERNAME = this._inputUsername.text;
+//				if()
+				(ScreenNavigator)(this.parent).showScreen(ConstantsUtil.GLOBALPAGE);
+				trace("登录成功");
+			}
 		}
 	}
 }

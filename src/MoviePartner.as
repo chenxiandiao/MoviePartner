@@ -8,7 +8,7 @@ package
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
 	
-//	import screens.Home;
+	import screens.Home;
 //	import uiscreens.Home;
 	import mainscreens.Root;
 	import starling.core.Starling;

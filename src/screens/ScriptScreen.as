@@ -19,14 +19,20 @@ package screens
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import render.LayoutScriptItemRenderer;
 	import render.ScriptItemRenderer;
+	import render.SuperScriptItemRenderer;
 	
 	import starling.core.Starling;
+	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	
+	import utils.EmbeddedAssets;
 
 	
 	public class ScriptScreen  extends Screen
@@ -44,6 +50,9 @@ package screens
 		private var _scriptGroup:LayoutGroup = null;
 		private var useWidth:int  = 0;
 		private var touchCount:int = 0;
+		private var _colorQuad:Quad;
+		private var _quad:Quad;
+		private var _downQuad:Quad;
 		public function ScriptScreen()
 		{
 			this.addEventListener(FeathersEventType.INITIALIZE, initializeHandler);
@@ -52,6 +61,10 @@ package screens
 		
 		public function initializeHandler():void
 		{
+			EmbeddedAssets.initialize();
+			this._colorQuad = new Quad(10,10,0xff0000);
+			this._quad = new Quad(10,700, 0xffffff);
+			this._downQuad = new Quad(10,10,0x000000);
 			useWidth = stage.stageWidth;
 			var w:int = stage.stageWidth;
 			
@@ -106,17 +119,26 @@ package screens
 			this._list.autoHideBackground = true;
 			
 		
-//			this._list.itemRendererFactory = function():IListItemRenderer
-//			{
-//				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
+			this._list.itemRendererFactory = function():IListItemRenderer
+			{
+				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 //				
 //				//enable the quick hit area to optimize hit tests when an item
 //				//is only selectable and doesn't have interactive children.
+				renderer.isQuickHitAreaEnabled = true;
+				renderer.labelField = "text";
+				return renderer;
+			};
+//			this._list.backgroundSkin = this._colorQuad;
+		
+//			this._list.itemRendererFactory = scriptListItemRendererFactory;
+//			this._list.itemRendererFactory = function():IListItemRenderer
+//			{
+//				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 //				renderer.isQuickHitAreaEnabled = true;
 //				renderer.labelField = "text";
 //				return renderer;
 //			};
-			this._list.itemRendererFactory = scriptListItemRendererFactory;
 			this._scriptGroup.addChild(_list);
 
 			this._lineAndScriptGroup.addChild(this._scriptGroup);
@@ -197,9 +219,13 @@ package screens
 		
 		protected function scriptListItemRendererFactory():IListItemRenderer
 		{
-			
-			var renderer:ScriptItemRenderer = new ScriptItemRenderer();
-			renderer.addEventListener(MouseEvent.MOUSE_DOWN,list_changeHandler);
+//			var renderer:SuperScriptItemRenderer = new SuperScriptItemRenderer();
+//			renderer.backgroundSkin = this._quad;
+//			renderer.downBackgroundSkin = this._downQuad;
+//			var renderer:ScriptItemRenderer = new ScriptItemRenderer();
+//			renderer.addEventListener(MouseEvent.MOUSE_DOWN,list_changeHandler);
+			var renderer:LayoutScriptItemRenderer = new LayoutScriptItemRenderer();
+//			renderer.backgroundSkin = this._quad;
 			return renderer;
 		}
 		

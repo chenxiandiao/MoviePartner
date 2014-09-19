@@ -42,6 +42,7 @@
     <SubTexture name="list-inset-item-single-up-skin" x="3" y="323" width="28" height="88"/>
     <SubTexture name="list-item-selected-skin" x="419" y="213" width="18" height="88"/>
     <SubTexture name="list-item-up-skin" x="419" y="121" width="18" height="88"/>
+    <SubTexture name="my-list-item-up-skin" x="129" y="327" width="18" height="88"/>
     <SubTexture name="page-indicator-normal-skin" x="111" y="191" width="16" height="16"/>
     <SubTexture name="page-indicator-selected-skin" x="111" y="171" width="16" height="16"/>
     <SubTexture name="picker-list-icon" x="419" y="95" width="20" height="22"/>

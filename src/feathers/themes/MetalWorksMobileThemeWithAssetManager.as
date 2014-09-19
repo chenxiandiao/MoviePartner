@@ -74,7 +74,7 @@ package feathers.themes
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
-
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.errors.IllegalOperationError;
@@ -89,7 +89,9 @@ package feathers.themes
 	import flash.text.engine.FontWeight;
 	import flash.text.engine.RenderingMode;
 	import flash.utils.getQualifiedClassName;
-
+	
+	import render.LayoutScriptItemRenderer;
+	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
@@ -99,6 +101,9 @@ package feathers.themes
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
+	import starling.utils.Color;
+	
+	import utils.Polygon;
 
 	[Event(name="complete",type="starling.events.Event")]
 
@@ -335,6 +340,9 @@ package feathers.themes
 		protected var verticalScrollBarThumbSkinTextures:Scale3Textures;
 		protected var horizontalScrollBarThumbSkinTextures:Scale3Textures;
 		protected var searchIconTexture:Texture;
+		
+		//---cxd add---
+		protected var myItemRendererUpSkinTextures:Scale9Textures;
 
 		override public function dispose():void
 		{
@@ -590,6 +598,8 @@ package feathers.themes
 
 			this.itemRendererUpSkinTextures = new Scale9Textures(this.atlas.getTexture("list-item-up-skin"), ITEM_RENDERER_SCALE9_GRID);
 			this.itemRendererSelectedSkinTextures = new Scale9Textures(this.atlas.getTexture("list-item-selected-skin"), ITEM_RENDERER_SCALE9_GRID);
+			//---cxd add---
+			this.myItemRendererUpSkinTextures = new Scale9Textures(this.atlas.getTexture("my-list-item-up-skin"), ITEM_RENDERER_SCALE9_GRID);
 			this.insetItemRendererFirstUpSkinTextures = new Scale9Textures(this.atlas.getTexture("list-inset-item-first-up-skin"), INSET_ITEM_RENDERER_FIRST_SCALE9_GRID);
 			this.insetItemRendererFirstSelectedSkinTextures = new Scale9Textures(this.atlas.getTexture("list-inset-item-first-selected-skin"), INSET_ITEM_RENDERER_FIRST_SCALE9_GRID);
 			this.insetItemRendererLastUpSkinTextures = new Scale9Textures(this.atlas.getTexture("list-inset-item-last-up-skin"), INSET_ITEM_RENDERER_LAST_SCALE9_GRID);
@@ -1602,8 +1612,11 @@ package feathers.themes
 
 			const topArrowSkin:Image = new Image(this.calloutTopArrowSkinTexture);
 			topArrowSkin.scaleX = topArrowSkin.scaleY = this.scale;
-			callout.topArrowSkin = topArrowSkin;
-
+//			callout.topArrowSkin = topArrowSkin;
+			callout.topArrowSkin = new Quad(20,20,Color.WHITE);
+//			var polygon:Polygon = new Polygon(50, 3, Color.WHITE); // radius, edges, color
+//			callout.topArrowSkin = polygon;
+			
 			const rightArrowSkin:Image = new Image(this.calloutRightArrowSkinTexture);
 			rightArrowSkin.scaleX = rightArrowSkin.scaleY = this.scale;
 			callout.rightArrowSkin = rightArrowSkin;

@@ -107,7 +107,7 @@ package screens
 			
 			this._navigator.addScreen("StageView", new ScreenNavigatorItem(StageView));
 			this._navigator.addScreen("ScriptBreakHome", new ScreenNavigatorItem(ScriptBreakHome));
-			this._navigator.showScreen("ScriptBreakHome");
+			this._navigator.showScreen("StageView");
 		}
 		
 		public static function get assets():AssetManager { return sAssets; }

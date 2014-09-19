@@ -35,15 +35,14 @@
 
 .settings/org.eclipse.core.resources.prefs
 
-*.png
 
-*.xml
 
-*.txt
 
-*.ttf
 
-*.jpg
+
+/bin-debug/*
+
+
 
 *.zip
 
